@@ -18,6 +18,9 @@ class CrudRepository{
                     id:data
                 }
             });
+            if(!response){
+                throw new AppError("No record found to delete",StatusCodes.NOT_FOUND);
+            }
             return response;
         } 
     async get(data){
@@ -40,6 +43,11 @@ class CrudRepository{
                     id:id
                 }
             });
-            return response;
+            if(response[0]===0){
+                throw new AppError("No record found to update",StatusCodes.NOT_FOUND);
+            }
+            // return response;
+             const updatedRecord = await this.model.findByPk(id);
+             return updatedRecord;
         } }
 module.exports=CrudRepository;

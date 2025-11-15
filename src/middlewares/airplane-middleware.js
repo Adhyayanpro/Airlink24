@@ -9,6 +9,15 @@ function validateCreateRequest(req, res, next){
     }
     next();
 } 
+function validateUpdateRequest(req, res, next){
+    if(!req.body.modelNumber){
+        ErrorResponse.message="Model Number not found in the request body";
+        ErrorResponse.error=new AppError("Model Number not found in the request body",StatusCodes.BAD_REQUEST);
+        return res.status(StatusCodes.BAD_REQUEST).json(ErrorResponse);
+    }
+    next();
+}
 module.exports={
-    validateCreateRequest
+    validateCreateRequest,
+    validateUpdateRequest
 };
